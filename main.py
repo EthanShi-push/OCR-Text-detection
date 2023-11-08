@@ -46,11 +46,16 @@ def findContours(img):
             wanted = approximate
             break
 
-    img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
-    cv.drawContours(img, [wanted], -1, (0, 0, 255), 2)
+    # img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
+    # cv.drawContours(img, [wanted], -1, (0, 255, 0), 2)
+    # showImage(img)
     #cv.drawContours(img, contour, -1, (0,255,0), 2)
-    showImage(img)
 
+    # 4 points of the outermost contour
+    return wanted
+
+def transform(img,contour):
+    pass
 
 def main():
     image = cv.imread("test.jpg")
@@ -62,7 +67,9 @@ def main():
 
     resizedImg = resize(processedImg, height=500)
 
-    findContours(resizedImg)
+    outerContour = findContours(resizedImg)
+
+    transformImg = transform(image,outerContour.reshape(4,2)*ratio)
 
 
 # Press the green button in the gutter to run the script.

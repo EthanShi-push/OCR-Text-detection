@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93ce805e-1170-40fa-9121-c41892b65a0f" name="Changes" comment="all up to date">
+    <list default="true" id="93ce805e-1170-40fa-9121-c41892b65a0f" name="Changes" comment="Finish outermost contour finding">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +70,7 @@
       <updated>1699420709666</updated>
       <workItem from="1699420711601" duration="3682000" />
       <workItem from="1699426982995" duration="7677000" />
-      <workItem from="1699434753218" duration="2011000" />
+      <workItem from="1699434753218" duration="2698000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -143,7 +144,23 @@
       <option name="project" value="LOCAL" />
       <updated>1699426671371</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Finish outermost contour finding">
+      <option name="closed" value="true" />
+      <created>1699436817681</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1699436817681</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Finish outermost contour finding">
+      <option name="closed" value="true" />
+      <created>1699436864924</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1699436864924</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,9 +195,10 @@
     <MESSAGE value="Testing githu" />
     <MESSAGE value="Testing branch" />
     <MESSAGE value="all up to date" />
-    <option name="LAST_COMMIT_MESSAGE" value="all up to date" />
+    <MESSAGE value="Finish outermost contour finding" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish outermost contour finding" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/OCR_Detection_Tool$main.coverage" NAME="main Coverage Results" MODIFIED="1699436773094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/OCR_Detection_Tool$main.coverage" NAME="main Coverage Results" MODIFIED="1699437151606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
