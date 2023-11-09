@@ -53,7 +53,7 @@ def findContours(img):
 
     # sort points
     #top left, top right, bottom right, bottom left
-    newWanted = np.zeros((4,2),dtype=int)
+    newWanted = np.zeros((4,2),dtype="float32")
 
     top_left_element = wanted[np.argmin(np.sum(wanted, axis=1))]
     newWanted[0] = top_left_element
@@ -71,15 +71,30 @@ def findContours(img):
         top_right_element = point1
         bottom_left_element = point2
     else:
-        top_right_element = point2
         bottom_left_element = point1
+        top_right_element = point2
+    newWanted[1] = top_right_element
+    newWanted[3] = bottom_left_element
     # 4 points of the outermost contour
-    #return wanted
+    return newWanted
 
-def transform(img,contour):
-    pass
+def transform(img,contourPts):
+    (tl,tr,br,bl) = contourPts
+    topWidth = np.sqrt((tr[0]-tl[0])**2 + (tr[1]-tl[1])**2)
+    bottomWidth = np.sqrt((br[0]-bl[0])**2 + (br[1]-bl[1])**2)
+    maxWidth = max(int(topWidth),int(bottomWidth))
 
-def main():
+    leftHeight = np.sqrt((bl[0]-tl[0])**2 + (bl[1]-tl[1])**2)
+    rightHeight = np.sqrt((br[0]-tr[0])**2 + (br[1]-tr[1])**2)
+    maxHeight = max(int(leftHeight),int(rightHeight))
+
+    desiredPoints = np.array([[0,0],[maxWidth,0],[maxWidth,maxHeight],[0,maxHeight]],dtype="float32")
+
+    matrix = cv.getPerspectiveTransform(contourPts,desiredPoints)
+    desiredImg = cv.warpPerspective(img,matrix,(maxWidth,maxHeight))
+    showImage(desiredImg)
+
+def ocrTextExtracter():
     image = cv.imread("test.jpg")
     assert image is not None, "No such file"
 
@@ -91,9 +106,9 @@ def main():
 
     outerContour = findContours(resizedImg)
 
-    #transformImg = transform(image,outerContour.reshape(4,2)*ratio)
+    transformImg = transform(image,outerContour.reshape(4,2)*ratio)
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    main()
+    ocrTextExtracter()
