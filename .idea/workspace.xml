@@ -70,7 +70,8 @@
       <updated>1699420709666</updated>
       <workItem from="1699420711601" duration="3682000" />
       <workItem from="1699426982995" duration="7677000" />
-      <workItem from="1699434753218" duration="2698000" />
+      <workItem from="1699434753218" duration="3034000" />
+      <workItem from="1699472331819" duration="9424000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -160,7 +161,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699436864924</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Finish outermost contour finding">
+      <option name="closed" value="true" />
+      <created>1699437486133</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1699437486133</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -199,6 +208,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Finish outermost contour finding" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/OCR_Detection_Tool$main.coverage" NAME="main Coverage Results" MODIFIED="1699437151606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/OCR_Detection_Tool$main.coverage" NAME="main Coverage Results" MODIFIED="1699490486410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

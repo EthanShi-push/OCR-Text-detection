@@ -45,14 +45,36 @@ def findContours(img):
         if len(approximate)==4:
             wanted = approximate
             break
-
+    wanted = wanted.reshape(-1,2)
     # img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
     # cv.drawContours(img, [wanted], -1, (0, 255, 0), 2)
     # showImage(img)
     #cv.drawContours(img, contour, -1, (0,255,0), 2)
 
+    # sort points
+    #top left, top right, bottom right, bottom left
+    newWanted = np.zeros((4,2),dtype=int)
+
+    top_left_element = wanted[np.argmin(np.sum(wanted, axis=1))]
+    newWanted[0] = top_left_element
+
+    bottom_right_element = wanted[np.argmax(np.sum(wanted, axis=1))]
+    newWanted[2] = bottom_right_element
+    new = wanted[
+        (wanted != top_left_element).all(axis=1) &
+        (wanted != bottom_right_element).all(axis=1)
+        ]
+
+    # Identify the top-right and bottom-left corners among the remaining two points
+    point1, point2 = new
+    if point1[0] > point2[0]:
+        top_right_element = point1
+        bottom_left_element = point2
+    else:
+        top_right_element = point2
+        bottom_left_element = point1
     # 4 points of the outermost contour
-    return wanted
+    #return wanted
 
 def transform(img,contour):
     pass
@@ -69,7 +91,7 @@ def main():
 
     outerContour = findContours(resizedImg)
 
-    transformImg = transform(image,outerContour.reshape(4,2)*ratio)
+    #transformImg = transform(image,outerContour.reshape(4,2)*ratio)
 
 
 # Press the green button in the gutter to run the script.
