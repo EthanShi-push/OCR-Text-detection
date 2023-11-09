@@ -97,7 +97,7 @@ def transform(img,contourPts):
 def ocrTextExtracter():
     image = cv.imread("test.jpg")
     assert image is not None, "No such file"
-
+    image = resize(image,height=1100)
     processedImg = imageProcessed(image)
     ratio = processedImg.shape[0] / 500.0
     copy_img = processedImg.copy()
