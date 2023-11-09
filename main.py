@@ -112,8 +112,6 @@ def ocrTextExtracter():
 
     transformImg = transform(image,outerContour.reshape(4,2)*ratio)
 
-    imgNew = cv.cvtColor(transformImg, cv.COLOR_BGR2GRAY)
-    ret, binaryImage = cv.threshold(imgNew, 195, 255, cv.THRESH_BINARY)
 
     cv.imwrite("result.jpg", transformImg)
 
