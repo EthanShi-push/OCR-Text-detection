@@ -45,42 +45,46 @@ def findContours(img):
     for c in contour:
         peri = cv.arcLength(c,True)
         approximate = cv.approxPolyDP(c,0.04*peri,True)
-        if len(approximate)==4:
+        if len(approximate)==4 or (cv.contourArea(approximate)> 400):
             wanted = approximate
             break
-    wanted = wanted.reshape(-1,2)
-    # img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
-    # cv.drawContours(img, [wanted], -1, (0, 255, 0), 2)
-    # showImage(img)
-    #cv.drawContours(img, contour, -1, (0,255,0), 2)
+    if len(wanted) == 4:
+        wanted = wanted.reshape(-1,2)
+        # img = cv.cvtColor(img, cv.COLOR_GRAY2BGR)
+        # cv.drawContours(img, [wanted], -1, (0, 255, 0), 2)
+        # showImage(img)
+        #cv.drawContours(img, contour, -1, (0,255,0), 2)
 
-    # sort points
-    #top left, top right, bottom right, bottom left
-    newWanted = np.zeros((4,2),dtype="float32")
+        # sort points
+        #top left, top right, bottom right, bottom left
+        newWanted = np.zeros((4,2),dtype="float32")
 
-    top_left_element = wanted[np.argmin(np.sum(wanted, axis=1))]
-    newWanted[0] = top_left_element
+        top_left_element = wanted[np.argmin(np.sum(wanted, axis=1))]
+        newWanted[0] = top_left_element
 
-    bottom_right_element = wanted[np.argmax(np.sum(wanted, axis=1))]
-    newWanted[2] = bottom_right_element
-    new = wanted[
-        (wanted != top_left_element).all(axis=1) &
-        (wanted != bottom_right_element).all(axis=1)
-        ]
+        bottom_right_element = wanted[np.argmax(np.sum(wanted, axis=1))]
+        newWanted[2] = bottom_right_element
+        new = wanted[
+            (wanted != top_left_element).all(axis=1) &
+            (wanted != bottom_right_element).all(axis=1)
+            ]
 
-    # Identify the top-right and bottom-left corners among the remaining two points
-    point1, point2 = new
-    if point1[0] > point2[0]:
-        top_right_element = point1
-        bottom_left_element = point2
+        # Identify the top-right and bottom-left corners among the remaining two points
+        point1, point2 = new
+        if point1[0] > point2[0]:
+            top_right_element = point1
+            bottom_left_element = point2
+        else:
+            bottom_left_element = point1
+            top_right_element = point2
+        newWanted[1] = top_right_element
+        newWanted[3] = bottom_left_element
+        # 4 points of the outermost contour
+        return newWanted
     else:
-        bottom_left_element = point1
-        top_right_element = point2
-    newWanted[1] = top_right_element
-    newWanted[3] = bottom_left_element
-    # 4 points of the outermost contour
-    return newWanted
-
+        # computing the bounding rectangle of the contour
+        x, y, w, h = cv.boundingRect(wanted)
+        return np.array([[x,y],[x+w,y],[x+w,y+h],[x,y+h]],dtype="float32")
 def transform(img,contourPts):
     (tl,tr,br,bl) = contourPts
     topWidth = np.sqrt((tr[0]-tl[0])**2 + (tr[1]-tl[1])**2)
@@ -98,7 +102,7 @@ def transform(img,contourPts):
     return  desiredImg
 
 def ocrTextExtracter():
-    image = cv.imread("test.jpg")
+    image = cv.imread("testImg/test2.jpg")
     assert image is not None, "No such file"
     image = resize(image,height=1000)
     processedImg = imageProcessed(image)
@@ -111,7 +115,7 @@ def ocrTextExtracter():
     outerContour = findContours(resizedImg)
 
     transformImg = transform(image,outerContour.reshape(4,2)*ratio)
-
+    showImage(transformImg)
 
     cv.imwrite("result.jpg", transformImg)
 
