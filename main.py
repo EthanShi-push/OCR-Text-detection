@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
-
+import pytesseract
+from PIL import Image
 
 def showImage(img):
     # Display the image
@@ -35,9 +36,11 @@ def resize(img, width=None, height=None):
 
 def findContours(img):
     img2 = cv.GaussianBlur(img.copy(),(5,5),0)
-    edgeImg = cv.Canny(img2,75,200)
-    contours, hierarchy = cv.findContours(edgeImg.copy(), cv.RETR_LIST, cv.CHAIN_APPROX_SIMPLE)
+    edgeImg = cv.Canny(img2,100,200)
+
+    contours, hierarchy = cv.findContours(edgeImg.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
     contour = sorted(contours,key=cv.contourArea,reverse=True)[0:5]
+
     wanted = None
     for c in contour:
         peri = cv.arcLength(c,True)
@@ -92,13 +95,14 @@ def transform(img,contourPts):
 
     matrix = cv.getPerspectiveTransform(contourPts,desiredPoints)
     desiredImg = cv.warpPerspective(img,matrix,(maxWidth,maxHeight))
-    showImage(desiredImg)
+    return  desiredImg
 
 def ocrTextExtracter():
     image = cv.imread("test.jpg")
     assert image is not None, "No such file"
-    image = resize(image,height=1100)
+    image = resize(image,height=1000)
     processedImg = imageProcessed(image)
+
     ratio = processedImg.shape[0] / 500.0
     copy_img = processedImg.copy()
 
@@ -108,6 +112,13 @@ def ocrTextExtracter():
 
     transformImg = transform(image,outerContour.reshape(4,2)*ratio)
 
+    imgNew = cv.cvtColor(transformImg, cv.COLOR_BGR2GRAY)
+    ret, binaryImage = cv.threshold(imgNew, 195, 255, cv.THRESH_BINARY)
+
+    cv.imwrite("result.jpg", transformImg)
+
+    text = pytesseract.image_to_string(Image.open("result.jpg"))
+    print(text)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
