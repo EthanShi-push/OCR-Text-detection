@@ -1,8 +1,7 @@
 import cv2 as cv
 import numpy as np
-import pytesseract
 from PIL import Image
-
+from paddleocr import PaddleOCR, draw_ocr
 def showImage(img):
     # Display the image
     cv.imshow("Image", img)
@@ -115,15 +114,25 @@ def ocrTextExtracter():
     outerContour = findContours(resizedImg)
 
     transformImg = transform(image,outerContour.reshape(4,2)*ratio)
-    transformImg = cv.cvtColor(transformImg, cv.COLOR_BGR2GRAY)
-    ret,transformImg = cv.threshold(transformImg,200,230, cv.THRESH_BINARY)
+
     showImage(transformImg)
 
     cv.imwrite("result.jpg", transformImg)
+    ocr = PaddleOCR(use_angle_cls=True, lang="en")  # need to run only once to download and load model into memory
+    img_path = 'result.jpg'
+    result = ocr.ocr(img_path, cls=True)
+    for idx in range(len(result)):
+        res = result[idx]
+        for line in res:
+            print(line)
 
-    text = pytesseract.image_to_string(Image.open("result.jpg"))
-    print(text)
-
+    image = Image.open(img_path).convert('RGB')
+    boxes = [line[0] for line in result]
+    txts = [line[1][0] for line in result]
+    scores = [line[1][1] for line in result]
+    im_show = draw_ocr(image, boxes, txts, scores, font_path='/path/to/PaddleOCR/doc/fonts/simfang.ttf')
+    im_show = Image.fromarray(im_show)
+    im_show.save('result.jpg')
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     ocrTextExtracter()
