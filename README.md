@@ -1,6 +1,3 @@
-Based on the content of the `main.py` file and the structure of the project, here is a **README.md** file for your project:
-
----
 
 # OCR Text Detection
 
